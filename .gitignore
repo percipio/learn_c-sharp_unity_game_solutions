@@ -1,0 +1,4 @@
+# exclude log files
+Text_Adventure/Temp/*
+Text_Adventure/Library/*
+Text_Adventure/Assembly-CSharp.csproj

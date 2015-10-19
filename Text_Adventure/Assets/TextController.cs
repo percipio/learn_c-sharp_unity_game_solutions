@@ -8,7 +8,8 @@ public class TextController : MonoBehaviour {
 	
 	private enum States {
 		cell_0, cell_1, mirror, sheets_0, lock_0, cell_mirror, sheets_1, lock_1,
-		corridor_0
+		corridor_0, corridor_1, corridor_2, corridor_3, stairs_0, stairs_1, 
+		stairs_2, courtyard_0, courtyard_1, floor_0, floor_1, closet_door_0, closet_door_1, in_closet
 	};
 	private States myState;
 	
@@ -29,6 +30,19 @@ public class TextController : MonoBehaviour {
 		else if (myState == States.mirror) 			{mirror();}
 		else if (myState == States.cell_mirror) 	{cell_mirror();}
 		else if (myState == States.corridor_0) 		{corridor_0();}
+		else if (myState == States.corridor_1)		{corridor_1();}
+		else if (myState == States.corridor_2)		{corridor_2();}
+		else if (myState == States.corridor_3)		{corridor_3();}
+		else if (myState == States.stairs_0)		{stairs_0();}
+		else if (myState == States.stairs_1)		{stairs_1();}
+		else if (myState == States.stairs_2)		{stairs_2();}
+		else if (myState == States.floor_0)			{floor_0();}
+		else if (myState == States.floor_1)			{floor_1();}
+		else if (myState == States.courtyard_0)		{courtyard_0();}
+		else if (myState == States.courtyard_1)		{courtyard_1();}
+		else if (myState == States.closet_door_0)	{closet_door_0();}
+		else if (myState == States.closet_door_1)	{closet_door_1();}
+		else if (myState == States.in_closet)		{in_closet();}
 	}
 	
 	void cell_0 () {		
@@ -95,7 +109,97 @@ public class TextController : MonoBehaviour {
 	
 	void corridor_0 () {		
 		text.text = "You are in a corridor. There is a wall closet on the right and stairs on the left." + 
-					"\n\nPress 'S' to walk up the stairs.";
+					"\n\nPress 'S' to walk up the stairs, 'F' to look at the floor, or 'C' to look at the closet.";
+		if 		(Input.GetKeyDown(KeyCode.S))		{myState = States.stairs_0;}
+		if 		(Input.GetKeyDown(KeyCode.F))		{myState = States.floor_0;}
+		if 		(Input.GetKeyDown(KeyCode.C))		{myState = States.closet_door_0;}
+	}
+	
+	void corridor_1 () {		
+		text.text = "You are still in the corridor paperclip in hand." + 
+					"\n\nPress 'S' to walk up the stairs, 'C' to look at the closet, or 'F' to look back at the floor.";
+		if 		(Input.GetKeyDown(KeyCode.S))		{myState = States.stairs_1;}
+		if 		(Input.GetKeyDown(KeyCode.F))		{myState = States.floor_1;}
+		if 		(Input.GetKeyDown(KeyCode.C))		{myState = States.closet_door_1;}
+	}
+	
+	void corridor_2 () {		
+		text.text = "You are back in the corridor with clothes in hand." + 
+					"\n\nPress 'S' to walk up the stairs or 'C' to get back in the closet.";
+		if 		(Input.GetKeyDown(KeyCode.S))		{myState = States.stairs_2;}
+		if 		(Input.GetKeyDown(KeyCode.C))		{myState = States.in_closet;}
+	}
+	
+	void corridor_3 () {		
+		text.text = "You are back in the corridor dressed as a guard." + 
+			"\n\nPress 'S' to walk up the stairs and enter the courtyard or 'C' to get back in the closet and undress.";
+		if 		(Input.GetKeyDown(KeyCode.S))		{myState = States.courtyard_1;}
+		if 		(Input.GetKeyDown(KeyCode.C))		{myState = States.in_closet;}
+	}
+	
+	void stairs_0 () {		
+		text.text = "You walk to the top of the stairs and see a courtyard full of guards. They don't notice you." + 
+			"\n\nPress 'R' to return to the corridor or 'E' to enter the courtyard.";
+		if 		(Input.GetKeyDown(KeyCode.R))		{myState = States.corridor_0;}
+		if 		(Input.GetKeyDown(KeyCode.E))		{myState = States.courtyard_0;}
+	}
+	
+	void stairs_1 () {		
+		text.text = "You return to the top of the stairs and a guard notices the glint of the paper clip." + 
+			"\n\nPress 'R' to quickly dash back downstairs unnoticed. Press 'E' to enter the courtyard";
+		if 		(Input.GetKeyDown(KeyCode.R))		{myState = States.corridor_1;}
+		if 		(Input.GetKeyDown(KeyCode.E))		{myState = States.courtyard_0;}
+	}
+	
+	void stairs_2 () {		
+		text.text = "You return to the top of the stairs but you are just holding some clothing. Are you sure you want to enter the yard?" + 
+			"\n\nPress 'R' to return to the corridor before the guards notice you. Press 'E' to enter the courtyard.";
+		if 		(Input.GetKeyDown(KeyCode.R))		{myState = States.corridor_2;}
+		if 		(Input.GetKeyDown(KeyCode.E))		{myState = States.courtyard_0;}
+	}
+	
+	void floor_0 () {		
+		text.text = "The floor is disgusting. It is covered in dirt and some dark sludge; you see a glinting paperclip off to the corner." + 
+					"\n\nPress 'R' to view the rest of the room or press 'P' to pick up the paperclip.";
+		if 		(Input.GetKeyDown(KeyCode.R))		{myState = States.corridor_0;}
+		if 		(Input.GetKeyDown(KeyCode.P))		{myState = States.corridor_1;}
+	}
+	
+	void floor_1 () {		
+		text.text = "The floor is still a messy layer of dirt and sludge." + 
+			"\n\nPress 'R' to view the rest of the room.";
+		if 		(Input.GetKeyDown(KeyCode.R))		{myState = States.corridor_1;}
+	}
+	
+	void closet_door_0 () {
+		text.text = "You see a sturdy closet door but it is locked." +
+					"\n\nPress 'R' to view the corridor.";
+		if 		(Input.GetKeyDown(KeyCode.R))		{myState = States.corridor_0;}
+	}
+	
+	void closet_door_1 () {
+		text.text = "You see a sturdy closet door but it is locked." +
+					"\n\nPress 'R' to view the corridor or 'P' to pick the lock and enter the closet.";
+		if 		(Input.GetKeyDown(KeyCode.R))		{myState = States.corridor_1;}
+		if 		(Input.GetKeyDown(KeyCode.P))		{myState = States.in_closet;}
+	}
+	
+	void in_closet () {
+		text.text = "You enter the closet and see some guard's clothing. You pick them up." +
+					"\n\nPress 'R' to Return to the corridor or 'D' to get dressed and return to the corridor.";
+		if 		(Input.GetKeyDown(KeyCode.R))		{myState = States.corridor_2;}
+		if 		(Input.GetKeyDown(KeyCode.D))		{myState = States.corridor_3;}
+	}
+	
+	void courtyard_0 () {
+		text.text = "You enter the courtyard and the guards all notice you. They proceed to beat you until you black out and then throw you into your cell." +
+			"\n\nPress 'P' to start the game over.";
 		if 		(Input.GetKeyDown(KeyCode.P))		{myState = States.cell_0;}
+	}
+	
+	void courtyard_1 () {
+		text.text = "You're in the courtyard and all the guards are staring at you." +
+			"\n\nPress 'R' to Return to the corridor.";
+		if 		(Input.GetKeyDown(KeyCode.R))		{myState = States.corridor_3;}
 	}
 }

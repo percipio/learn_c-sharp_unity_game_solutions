@@ -5,8 +5,8 @@ I started this repo late because I didn't think about it so this repo starts mid
 
 1.  Number Wizard -- DONE
 2.  Text Adventure -- DONE
-3.  Number Wizard UI -- TODO
-4.  Block Breaker -- TODO
+3.  Number Wizard UI -- DONE
+4.  Block Breaker -- In Progress
 5.  Laser Defender -- TODO
 6.  Glitch Garden -- TODO
 7.  Bowlmaster -- TODO
